@@ -21,12 +21,6 @@ Note that Pim currently only support Kerberos gateway authentication. Run
 `:help Pim` from inside Vim to learn more.
 
 
-Other
------
-
-For syntax highlighting in your `.pig` files, we recommend pig.vim_.
-
-
 Installation
 ------------
 
@@ -38,6 +32,12 @@ With `pathogen.vim`_:
   $ git clone https://github.com/mtth/pim.vim
 
 Otherwise simply copy the folders into your ``.vim`` directory.
+
+
+Other
+-----
+
+For syntax highlighting in your `.pig` files, we recommend pig.vim_.
 
 
 .. _pathogen.vim: https://github.com/tpope/vim-pathogen
