@@ -1,0 +1,99 @@
+*pim.txt*                                                                v0.0.1
+*Pim*
+
+Pig + Vim = Pim. Delicious.
+
+===============================================================================
+CONTENTS                                                          *PimContents*
+
+    1. Intro ................................... |PimIntro|
+    2. Commands ............................. |PimCommands|
+      2.1 |:PimDescribe|
+      2.2 |:PimGrunt|
+    3. Mappings ............................. |PimMappings|
+    4. Configuration ................... |PimConfiguration|
+      4.1 |g:pim_pig_command|
+      4.2 |g:pim_remote_url|
+      4.3 |g:pim_kerberos_bin_dir|
+    5. Changes ............................... |PimChanges|
+
+===============================================================================
+1. Intro                                                             *PimIntro*
+
+Pim provides a simple way to describe any variable in a pig script and load 
+parts of your script in grunt directly from Vim. Its most powerful feature is 
+remote execution support, e.g. when pig can only be run from a gateway machine:
+Pim will handle the underlying connections and transfers such that it's as 
+simple as if pig was running locally. Pim also caches and multiplexes 
+connections to speed up remote calls.
+
+
+===============================================================================
+2. Commands                                                       *PimCommands*
+
+-------------------------------------------------------------------------------
+2.1 :PimDescribe <variable>[:<line>]                             *:PimDescribe*
+
+Preview description (schema) of <variable> (<line> defaults to the line the 
+cursor is currently on). Note that if a variable’s name is present several 
+times on the line, its leftmost occurrence will be the one described (i.e. the 
+one to the left of the assignment, if present).
+
+This command is most easily used with the |gd| mappings.
+
+-------------------------------------------------------------------------------
+2.2 :[RANGE]PimGrunt[!]                                             *:PimGrunt*
+
+Load line selection in grunt. Without bang, sanitize the input (i.e. remove all 
+trigger commands) and add pretty printing, otherwise pass the input as is. 
+Range defaults to the entire buffer.
+
+Trigger commands are those which trigger job executions (e.g. dump, store) and 
+hadoop filesystem actions (e.g. rmf, rm, mkdir).
+
+
+===============================================================================
+3. Mappings                                                       *PimMappings*
+
+For `.pig` files, the following mappings are created:
+
+-------------------------------------------------------------------------------
+                                                                           *gd*
+
+Describe variable under cursor. Cf. |:PimDescribe| in the case where there are 
+multiple occurrences of the same variable on that line.
+
+
+-------------------------------------------------------------------------------
+                                                                    *<leader>x*
+
+Load entire file in grunt and give back user prompt. All trigger commands are 
+removed from the input.
+
+-------------------------------------------------------------------------------
+                                                                  v_*<leader>x*
+
+Load selection in grunt and give back user prompt. All trigger commands are 
+removed from the input.
+
+
+===============================================================================
+4. Configuration                                             *PimConfiguration*
+
+-------------------------------------------------------------------------------
+g:pim_pig_command = 'pig'
+
+The command used to run pig on the gateway. For example, if you would like your 
+grunt shell to run on a job queue named foo, set it to 
+'PIG_JAVA_OPTS="-Dmapred.job.queue.name=foo" pig'.
+
+-------------------------------------------------------------------------------
+g:pim_remote_url = ''
+
+The URL of the gateway. Empty if running pig locally.
+
+-------------------------------------------------------------------------------
+g:pim_kerberos_bin_dir = '/usr/bin/'
+
+The directory where to find the kerberos binaries. Only used if using the 
+remote functionality.
